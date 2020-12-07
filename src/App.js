@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import instruments from './data/instruments';
 import genres from './data/genres';
 import sample from 'lodash/sample';
@@ -7,6 +7,13 @@ import './App.scss';
 const App = () => {
     const [genre] = useState(sample(genres));
     const [instrument] = useState(sample(instruments));
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 600);
+    }, []);
 
     const getSpliceUrl = (type) => {
         let url = 'https://splice.com/sounds';
@@ -31,14 +38,14 @@ const App = () => {
                 rel="noreferrer"
             >
                 <span className="label">{label}</span>
-                <p className="result">{value}</p>
+                <p className="result"><span className="result-text">{value}</span></p>
             </a>
         );
     };
 
     return (
         <div className="App">
-            <div className="generator">
+            <div className={`generator ${loading ? 'loading' : ''}`}>
                 <div className="results">
                     {renderResult('Genre', genre?.label)}
                     {renderResult('Instrument', instrument?.label)}
