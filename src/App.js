@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import sample from 'lodash/sample';
 import instruments from './data/instruments';
 import genres from './data/genres';
-import sample from 'lodash/sample';
 import './App.scss';
 
 const App = () => {
@@ -32,26 +32,28 @@ const App = () => {
     const renderResult = (label, value) => {
         return (
             <a
-                className={label.toLowerCase()}
+                className={`results--category ${label.toLowerCase()}`}
                 href={getSpliceUrl(label.toLowerCase())}
                 target="_blank"
                 rel="noreferrer"
             >
                 <span className="label">{label}</span>
-                <p className="result"><span className="result-text">{value}</span></p>
+                <p className="value">
+                    <span className="value--text">{value}</span>
+                </p>
             </a>
         );
     };
 
     return (
-        <div className="App">
-            <div className={`generator ${loading ? 'loading' : ''}`}>
+        <div className="app">
+            <div className={`container ${loading ? 'loading' : ''}`}>
                 <div className="results">
                     {renderResult('Genre', genre?.label)}
                     {renderResult('Instrument', instrument?.label)}
                 </div>
                 <a
-                    className="results-link"
+                    className="results--link"
                     href={getSpliceUrl()}
                     target="_blank"
                     rel="noreferrer"
